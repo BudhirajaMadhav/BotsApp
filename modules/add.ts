@@ -16,6 +16,7 @@ module.exports = {
     extendedDescription: ADD.EXTENDED_DESCRIPTION,
     demo: { isEnabled: false },
     async handle(client: Client, chat: proto.IWebMessageInfo, BotsApp: BotsApp, args: string[]): Promise<void> {
+    for (let i = 0; i < args.length; i++) {
         try {
             if (!BotsApp.isGroup) {
                 client.sendMessage(
@@ -33,8 +34,8 @@ module.exports = {
                     MessageType.text
                 ).catch(err => inputSanitization.handleError(err, client, BotsApp));
                 return;
-            }
-            if (!args[0]) {
+            }                
+            if (!args[i]) {
                 client.sendMessage(
                     BotsApp.chatId,
                     ADD.NO_ARG_ERROR,
@@ -43,7 +44,7 @@ module.exports = {
                 return;
             }
             let number;
-            if (parseInt(args[0]) === NaN || args[0][0] === "+" || args[0].length < 10) {
+            if (parseInt(args[i]) === NaN || args[i][0] === "+" || args[i].length < 10) {
                 client.sendMessage(
                     BotsApp.chatId,
                     ADD.NUMBER_SYNTAX_ERROR,
@@ -51,10 +52,10 @@ module.exports = {
                 ).catch(err => inputSanitization.handleError(err, client, BotsApp));
                 return;
             }
-            if (args[0].length == 10 && !(parseInt(args[0]) === NaN)) {
-                number = CONFIG.COUNTRY_CODE + args[0];
+            if (args[i].length == 10 && !(parseInt(args[i]) === NaN)) {
+                number = CONFIG.COUNTRY_CODE + args[i];
             } else {
-                number = args[0];
+                number = args[i];
             }
             const [exists] = await client.sock.onWhatsApp(
                 number + "@s.whatsapp.net"
@@ -110,12 +111,8 @@ module.exports = {
             //     ).catch(err => inputSanitization.handleError(err, client, BotsApp));
             //     return;
             // }
-            client.sendMessage(
-                BotsApp.chatId,
-                "```" + number + ADD.SUCCESS + "```",
-                MessageType.text
-            );
-        } catch (err) {
+
+            } catch (err) {
             if (err.status == 400) {
                 await inputSanitization.handleError(
                     err,
@@ -126,6 +123,7 @@ module.exports = {
             }
             await inputSanitization.handleError(err, client, BotsApp);
         }
+    }
         return;
     },
 };
