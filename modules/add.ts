@@ -70,47 +70,48 @@ module.exports = {
             }
             const response: any = await client.sock.groupParticipantsUpdate(BotsApp.chatId, [number + "@s.whatsapp.net"], 'add');
 
-            // if (response[number + "@c.us"] == 408) {
-            //     client.sendMessage(
-            //         BotsApp.chatId,
-            //         ADD.NO_24HR_BAN,
-            //         MessageType.text
-            //     ).catch(err => inputSanitization.handleError(err, client, BotsApp));
-            //     return;
-            // } else if (response[number + "@c.us"] == 403) {
-            //     for (const index in response.participants) {
-            //         if ((number + "@c.us") in response.participants[index]) {
-            //             var code = response.participants[index][number + "@c.us"].invite_code;
-            //             var tom = response.participants[index][number + "@c.us"].invite_code_exp;
-            //         }
-            //     }
-            //     var invite = {
-            //         caption: "```Hi! You have been invited to join this WhatsApp group by BotsApp!```\n\n🔗https://mybotsapp.com",
-            //         groupJid: BotsApp.groupId,
-            //         groupName: BotsApp.groupName,
-            //         inviteCode: code,
-            //         inviteExpiration: tom,
-            //         jpegThumbnail: fs.readFileSync('./images/BotsApp_invite.jpeg')
-            //     }
-            //     await client.sendMessage(
-            //         number + "@s.whatsapp.net",
-            //         invite,
-            //         MessageType.groupInviteMessage
-            //     );
-            //     client.sendMessage(
-            //         BotsApp.chatId,
-            //         ADD.PRIVACY,
-            //         MessageType.text
-            //     ).catch(err => inputSanitization.handleError(err, client, BotsApp));
-            //     return;
-            // } else if (response[number + "@c.us"] == 409) {
-            //     client.sendMessage(
-            //         BotsApp.chatId,
-            //         ADD.ALREADY_MEMBER,
-            //         MessageType.text
-            //     ).catch(err => inputSanitization.handleError(err, client, BotsApp));
-            //     return;
-            // }
+            if (response[0].status == 408) {
+                client.sendMessage(
+                    BotsApp.chatId,
+                    ADD.NO_24HR_BAN,
+                    MessageType.text
+                ).catch(err => inputSanitization.handleError(err, client, BotsApp));
+                return;
+            } else if (response[0].status == 403) {
+                for (const index in response.participants) {
+                    if ((number + "@c.us") in response.participants[index]) {
+                        var code = response.participants[index][number + "@c.us"].invite_code;
+                        var tom = response.participants[index][number + "@c.us"].invite_code_exp;
+                    }
+                }
+                // var invite = {
+                //     caption: "```Hi! You have been invited to join this WhatsApp group",
+                //     groupJid: BotsApp.groupId,
+                //     groupName: BotsApp.groupName,
+                //     inviteCode: code,
+                //     inviteExpiration: tom,
+                //     jpegThumbnail: fs.readFileSync('./images/BotsApp_invite.jpeg')
+                // }
+                var groupLink = "";
+                await client.sendMessage(
+                    number + "@s.whatsapp.net",
+                    "Follow this link to join my WhatsApp group: " + groupLink +  " \n\nIf you are unable to join, please send me a message and I will add you manually.",
+                    MessageType.text
+                );
+                // client.sendMessage(
+                //     BotsApp.chatId,
+                //     ADD.PRIVACY,
+                //     MessageType.text
+                // ).catch(err => inputSanitization.handleError(err, client, BotsApp));
+                return;
+            } else if (response[0].status == 409) {
+                client.sendMessage(
+                    BotsApp.chatId,
+                    ADD.ALREADY_MEMBER,
+                    MessageType.text
+                ).catch(err => inputSanitization.handleError(err, client, BotsApp));
+                return;
+            }
 
             } catch (err) {
             if (err.status == 400) {
