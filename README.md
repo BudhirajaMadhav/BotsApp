@@ -12,7 +12,7 @@
 
 ![Docker Pulls](https://img.shields.io/docker/pulls/princemendiratta/botsapp?style=flat-square&label=Docker+Pulls) ![Docker Image Size](https://img.shields.io/docker/image-size/princemendiratta/botsapp?style=flat-square&label=Docker+Image+Size)
 
-BotsApp is an optimized and easy-to-use WhatsApp UserBot written in Node.js.
+BotsApp is an optimized and easy-to-use WhatsApp written in Node.js.
 
 Utilize your personal chat assistant/group manager to make the most out of WhatsApp.   
 
