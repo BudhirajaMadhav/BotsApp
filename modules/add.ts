@@ -78,12 +78,12 @@ module.exports = {
                 ).catch(err => inputSanitization.handleError(err, client, BotsApp));
                 return;
             } else if (response[0].status == 403) {
-                for (const index in response.participants) {
-                    if ((number + "@c.us") in response.participants[index]) {
-                        var code = response.participants[index][number + "@c.us"].invite_code;
-                        var tom = response.participants[index][number + "@c.us"].invite_code_exp;
-                    }
-                }
+                // for (const index in response.participants) {
+                //     if ((number + "@c.us") in response.participants[index]) {
+                //         var code = response.participants[index][number + "@c.us"].invite_code;
+                //         var tom = response.participants[index][number + "@c.us"].invite_code_exp;
+                //     }
+                // }
                 // var invite = {
                 //     caption: "```Hi! You have been invited to join this WhatsApp group",
                 //     groupJid: BotsApp.groupId,
