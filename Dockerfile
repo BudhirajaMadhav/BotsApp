@@ -6,13 +6,13 @@ COPY . /BotsApp
 
 WORKDIR /BotsApp
 
-RUN git init --initial-branch=multi-device
+RUN git init --initial-branch=railway
 
-RUN git remote add origin https://github.com/Prince-Mendiratta/BotsApp.git
+RUN git remote add origin https://github.com/BudhirajaMadhav/BotsApp.git
 
-RUN git fetch origin multi-device
+RUN git fetch origin railway
 
-RUN git reset --hard origin/multi-device
+RUN git reset --hard origin/railway
 
 RUN yarn
 
